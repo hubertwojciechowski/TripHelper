@@ -1,5 +1,12 @@
 package tripHelper.agents;
 
-public class PathAgent {
+import jade.core.Agent;
 
+public class PathAgent  extends Agent {
+
+	
+	protected void setup() {
+			
+	}
+	
 }
