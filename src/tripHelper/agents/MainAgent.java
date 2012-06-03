@@ -14,26 +14,23 @@ import jade.lang.acl.ACLMessage;
 
 public class MainAgent extends Agent {
 
-	
-	private static final long serialVersionUID = -3194090991124107894L;
-	private ArrayList<AID> calculationAgents;
-	
 	public static final boolean DEBUG = true;
+	private static final long serialVersionUID = -3194090991124107894L;
 	
-	
+	private ArrayList<AID> pathAgents;
 	
 	public MainAgent () {
 		
 		// Creating list of path agents 
-		calculationAgents = new ArrayList<AID>();
-		calculationAgents.add(new AID("pa1", AID.ISLOCALNAME ));
-		calculationAgents.add(new AID("pa2", AID.ISLOCALNAME ));
+		pathAgents = new ArrayList<AID>();
+		pathAgents.add(new AID("pa1", AID.ISLOCALNAME ));
+		pathAgents.add(new AID("pa2", AID.ISLOCALNAME ));
 		
 	}
 
 	protected void setup() {
 
-		// Wysylanie konfiguracji do agentow obliczeniowych
+		// Sending configuration to Path Agents
 		this.addBehaviour(this.configureCalculationAgents());
 		
 		
@@ -54,7 +51,7 @@ public class MainAgent extends Agent {
 				int precission = 1;
 				
 				// Creating message with configuration for each agent 
-				for (AID agent : calculationAgents) {
+				for (AID agent : pathAgents) {
 					
 					// Configuration
 					PathAgentConfiguration agentConfiguration = new PathAgentConfiguration(precission);
@@ -65,11 +62,11 @@ public class MainAgent extends Agent {
 					try {
 						configurationMsg.setContentObject(agentConfiguration);
 					} catch (IOException e) {
-						e.printStackTrace();
+
 					}
 					
 					if (DEBUG) {
-						System.out.println(String.format("%s : Wysylam precyje (%d) do %s ", myAgent.getLocalName(), precission , agent.getLocalName()  ));
+						System.out.println(String.format("%s : Wysylam preczje (%d) do %s ", myAgent.getLocalName(), precission , agent.getLocalName()  ));
 					}
 					
 					// Precisson incrementation
