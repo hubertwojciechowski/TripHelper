@@ -11,63 +11,86 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import jade.tools.introspector.gui.MyDialog;
 
-public class PathAgent  extends Agent {
+public class PathAgent extends Agent {
 
 	private static final long serialVersionUID = -155045182237519220L;
 
-
 	public static final boolean DEBUG = true;
-	
-	
+
 	private PathAgentConfiguration config;
+	private Path rawPath;
 	
 	
 	
 	protected void setup() {
-		
+
+		// Recive information behaviour
 		this.addBehaviour(this.reciveBehaviour());
 		
-		
-		
 	}
-	
-	
-	
+
 	// Behaviours
-	
+
 	public CyclicBehaviour reciveBehaviour() {
-		
+
 		return new CyclicBehaviour() {
-			
+
 			@Override
 			public void action() {
 				ACLMessage msg = receive();
 				if (msg != null) {
 					switch (msg.getPerformative()) {
-					
-					
-					case ACLMessage.INFORM : 
-						
+
+					case ACLMessage.INFORM:
+
 						try {
-							config = (PathAgentConfiguration) msg.getContentObject();
+							config = (PathAgentConfiguration) msg
+									.getContentObject();
 						} catch (UnreadableException e) {
 
 						}
+
 						
 						if (DEBUG) {
-							System.out.println(String.format("%s : Otrzymalem konfiguracje (precyzja %d) od %s ", myAgent.getLocalName(), config.precission, msg.getSender()  ));
+							System.out
+									.println(String
+											.format("%s : Otrzymalem konfiguracje (precyzja %d) od %s ",
+													myAgent.getLocalName(),
+													config.precission,
+													msg.getSender()));
 						}
+						break;
 						
+					case ACLMessage.REQUEST:
+						
+						
+						
+						
+						
+						
+						if (DEBUG) {
+							System.out
+									.println(String
+											.format("%s : Otrzymalem zadanie wyznaczenia trasy od %s ",
+													myAgent.getLocalName(),
+													msg.getSender()));
+						}
 						break;
-					default :
-						System.out.println(String.format("%s : Otrzymalem nieznany komunikat od %s ", myAgent.getLocalName(), msg.getSender()  ));
+						
+					default:
+						if (DEBUG) {
+							System.out
+									.println(String
+											.format("%s : Otrzymalem nieznany komunikat od %s ",
+													myAgent.getLocalName(),
+													msg.getSender()));
+						}
 						break;
-					
-					
+
 					}
 				}
 			}
 		};
 	}
-	
+
 }
